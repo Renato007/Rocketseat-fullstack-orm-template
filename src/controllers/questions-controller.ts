@@ -6,7 +6,7 @@ class QuestionsController {
   }
 
   async create(request: Request, response: Response) {
-    return response.status(201).json()
+    return response.status(201).json({message:"ok"})
   }
 
   async update(request: Request, response: Response) {
