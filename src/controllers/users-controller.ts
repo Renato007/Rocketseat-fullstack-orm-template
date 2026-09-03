@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { prisma } from "@/prisma";
 
 class UsersController {
   async index(request: Request, response: Response) {
@@ -6,7 +7,10 @@ class UsersController {
   }
 
   async create(request: Request, response: Response, next: NextFunction) {
-    throw new Error("Lasqueira Amigo!");
+    const {name, email} = request.body;
+
+    await prisma.user.create({data:{name, email}})
+
     return response.status(201).json({ message: "ok" });
   }
 
