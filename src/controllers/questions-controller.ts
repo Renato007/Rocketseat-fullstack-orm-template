@@ -6,16 +6,16 @@ class QuestionsController {
   async index(request: Request, response: Response) {
     const questions = await prisma.question.findMany({
       where: {
-        title:{
+        title: {
           //operador like
-          contains:  request.query.title?.toString().trim(),
+          contains: request.query.title?.toString().trim(),
           //Tanto maisculo quanto minusculo
-          mode: "insensitive" 
-        }
+          mode: "insensitive",
+        },
       },
-      orderBy:{
-        title:"asc"
-      }
+      orderBy: {
+        title: "asc",
+      },
     });
     return response.json(questions);
   }
@@ -35,6 +35,18 @@ class QuestionsController {
   }
 
   async update(request: Request, response: Response) {
+    const { id } = request.params;
+    const { title, content } = request.body;
+
+    await prisma.question.update({
+      data: {
+        title,
+        content,
+      },
+      where: {
+        id,
+      },
+    });
     return response.json();
   }
 
